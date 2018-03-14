@@ -14,7 +14,7 @@ def login_action(request):
         # if username == 'admin' and password == 'li123456':
         user = auth.authenticate(username=username,password=password)
         if user is not None:
-            auth.login(request,auth) # 登录
+            auth.login(request,user) # 登录
             request.session['user'] = username # 将session信息记录在浏览器
             response = HttpResponseRedirect('/event_manage/') # 重定向到/event_manage/路径
             # response.set_cookie('user',username,3600) # 添加浏览器cookie
