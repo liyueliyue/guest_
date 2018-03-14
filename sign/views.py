@@ -32,3 +32,7 @@ def event_manage(request):
     event_list = Event.objects.all()
     username = request.session.get('user','')
     return render(request,'event_manage.html',{'user':username,'events':event_list})
+# 退出系统
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect('/index/')

@@ -7,7 +7,7 @@
     <form method="post" action="/login_action/">
         {% csrf_token %}
         <input name="username" type="text" placeholder="请输入你的用户名"><br>
-        <input name="password" type="password" placeholder="请输入你的密码"><br>
+        <input name="password" type="text" placeholder="请输入你的密码"><br>
         <button id="btn" type="submit">登录</button><br>
         {{ error }}
     </form>
