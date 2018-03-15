@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^index/$',views.index), # 添加index的路径配置
     url(r'^login_action/$',views.login_action),
     url(r'^event_manage/$',views.event_manage),
-    url(r'^account/login/$',views.index),
-    url(r'^logout/$',views.logout)
+    url(r'^accounts/login/$',views.index),
+    url(r'^logout/$',views.logout),
+    url(r'^$',views.index),
 ]
