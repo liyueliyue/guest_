@@ -5,55 +5,56 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     <meta charset="UTF-8">
-    <title>Guest Manage</title>
+    <title>guests page</title>
 </head>
 <body role="document">
-{#    <导航栏></导航栏>#}
-    <nav class="navbar navbar-inverse navhar-fixed-top">
+{#    导航栏#}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <a href="/event_manage/" class="navbar-brand">Guest Manage System</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">发布会</a></li>
-                    <li><a href="/guest_manage/">嘉宾</a></li>
+                    <li class="active"><a href="/event_manage/">发布会</a></li>
+                    <li><a href="#">嘉宾</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="http://www.baidu.com" target="_blank">{{ user }}</a></li>
+                    <li><a href="#">{{ user }}</a></li>
                     <li><a href="/logout/">退出</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-{#发布会搜索表单#}
-    <div class="page-header">
+{#搜索器#}
+    <div class="page-header" style="padding-top: 50px">
         <div class="navbar-collapse collapse" id="navbar">
-            <form action="/search_name/" class="navbar-form" method="get">
+            <form method="get" action="/search_realname/" class="navbar-form" >
                 <div class="form-group">
-                    <input type="text" name="searchName" placeholder="请输入名称" class="form-control">
+                    <input class="form-control" type="text" name="searchRealname" placeholder="请输入用户姓名">
                 </div>
                 <button class="btn btn-success">搜索</button>
             </form>
         </div>
     </div>
-{#    发布会列表#}
-    <div class="row" style="padding-top:1px;">
+{#嘉宾列表#}
+    <div class="row" style="padding-top: 1px">
         <div class="col-md-7">
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>id</th><th>名称</th><th>状态</th><th>地址</th><th>时间</th>
+                        <th>id</th><th>名称</th><th>手机</th><th>电子邮箱</th><th>签到</th><th>发布会</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for i in events %}
+                    {% for i in guests %}
                         <tr>
                             <td>{{ i.id }}</td>
-                            <td>{{ i.name }}</td>
-                            <td>{{ i.status }}</td>
-                            <td>{{ i.address }}</td>
-                            <td>{{ i.start_time }}</td>
+                            <td>{{ i.realname }}</td>
+                            <td>{{ i.phone }}</td>
+                            <td>{{ i.email }}</td>
+                            <td>{{ i.sign }}</td>
+                            <td>{{ i.event }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

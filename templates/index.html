@@ -1,13 +1,16 @@
 <html>
 <head>
+    {% load bootstrap3 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
     <title>hello django</title>
 </head>
-<body>
-    <h1>发布会管理</h1>
-    <form method="post" action="/login_action/">
+<body class="container">
+    <h1>欢迎登录系统</h1>
+    <form method="post" action="/login_action/" class="navbar-form">
         {% csrf_token %}
-        <input name="username" type="text" placeholder="请输入你的用户名"><br>
-        <input name="password" type="text" placeholder="请输入你的密码"><br>
+        <input name="username" type="text" placeholder="请输入你的用户名" id="id_username"><br>
+        <input name="password" type="text" placeholder="请输入你的密码" id="id_password"><br>
         <button id="btn" type="submit">登录</button><br>
         {{ error }}
     </form>
