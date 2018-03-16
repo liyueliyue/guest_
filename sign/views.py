@@ -50,10 +50,10 @@ def search_name(request):
     search_name = request.GET.get('searchName','')
     event_list = Event.objects.filter(name__contains=search_name)
     return render(request,'event_manage.html',{'user':username,'events':event_list})
-# 嘉宾手机号码搜索
+# 用户真实姓名搜索
 @login_required
 def search_realname(request):
     username = request.session.get('user','')
-    search_Realname = request.GET.get('searchRealname','')
-    guest_list = Guest.objects.filter(name__contains=search_Realname)
+    search_Realname = request.GET.get('searchRealname','')# 通过表单的name属性获取用户输入
+    guest_list = Guest.objects.filter(realname__contains=search_Realname)
     return render(request,"guest_manage.html",{'user':username,'guests':guest_list})
