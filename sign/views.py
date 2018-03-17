@@ -3,6 +3,8 @@ from django.shortcuts import HttpResponse,HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from sign.models import Event,Guest
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
+
 # Create your views here.
 def index(request):
     return render(request,"index.html")
@@ -38,7 +40,17 @@ def event_manage(request):
 def guest_manage(request):
     guest_list = Guest.objects.all() # 获得table中所有对象
     username = request.session.get('user','') # 从浏览器中获取session
-    return render(request,'guest_manage.html',{'user':username,'guests':guest_list})
+    paginator = Paginator(guest_list,3)# 创建每页3条数据的分页器
+    page = request.GET.get('page') # 通过get请求得到当前要显示第几页数据
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # 如果page不是整数，显示第一页的数据
+        contacts = paginator.page(1)
+    except EmptyPage:
+        # 如果page不在范围内，显示最后一页数据
+        contacts = paginator.page(paginator.num_pages)
+    return render(request,'guest_manage.html',{'user':username,'guests':contacts})
 # 退出系统
 def logout(request):
     auth.logout(request)
