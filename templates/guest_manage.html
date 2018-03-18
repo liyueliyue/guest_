@@ -43,7 +43,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>id</th><th>名称</th><th>手机</th><th>电子邮箱</th><th>签到</th><th>发布会</th>
+                        <th>id</th><th>名称</th><th>手机</th><th>电子邮箱</th><th>签到</th><th>发布会</th><th>签到</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,6 +55,9 @@
                             <td>{{ i.email }}</td>
                             <td>{{ i.sign }}</td>
                             <td>{{ i.event }}</td>
+                            <td>
+                                <a href="/sign_index/{{ i.id }}" target="{{ i.id }}_blank">签到</a>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -68,7 +71,7 @@
                 <a href="?page={{ guests.previous_page_number }}">上一页</a>
             {% endif %}
             <span class="current">
-                Page {{ guests.number }} of {{ guests.paginator.num_pages }} .
+                Page {{ guests.number }} of {{ guests.paginator.num_pages }} #
             </span>
             {% if guests.has_next %}
                 <a href="?page={{ guests.next_page_number }}">下一页</a>

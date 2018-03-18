@@ -4,6 +4,7 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from sign.models import Event,Guest
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 def index(request):
@@ -69,3 +70,30 @@ def search_realname(request):
     search_Realname = request.GET.get('searchRealname','')# 通过表单的name属性获取用户输入
     guest_list = Guest.objects.filter(realname__contains=search_Realname)
     return render(request,"guest_manage.html",{'user':username,'guests':guest_list})
+# 签到页面
+@login_required
+def sign_index(request,eid):
+    event = get_object_or_404(Event,id=eid)
+    return render(request,'sign_index.html',{'event':event})
+# 签到动作
+@login_required
+def sign_index_action(request,eid):
+    event = get_object_or_404(request,id)
+    phone = request.POST.get('phone','') # 通过获取用户输入的phone或直接点击签到按钮的空值
+    print(phone)
+
+    # 手机号码不存在的情况
+    result = Guest.objects.filter(phone=phone)
+    if not result:
+        return render(request,'sign_index.html',{'event':event,'hint':'手机号码不存在，请重新输入'})
+
+    result = Guest.objects.filter(phone=phone,event_id=eid)
+    if not result:
+        return render(request,'sign_index.html',{'event':event,'hint':'发布会id或者手机号码错误'})
+
+    result = Guest.objects.filter(phone=phone,event_id=eid)
+    if result.sign:
+        return render(request,'sign_index.html',{'event':event,'hint':'您已经签到'})
+    else:
+        Guest.objects.filter(phone=phone,event_id=eid).update(sign='1')
+        return render(request,'sign_index.html',{'event':event,'hint':'签到成功','guest':result})
