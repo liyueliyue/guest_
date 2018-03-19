@@ -55,8 +55,9 @@
                             <td>{{ i.email }}</td>
                             <td>{{ i.sign }}</td>
                             <td>{{ i.event }}</td>
+{#                            这里需要拿的id是event标的id不是guest表大id#}
                             <td>
-                                <a href="/sign_index/{{ i.id }}" target="{{ i.id }}_blank">签到</a>
+                                <a href="/sign_index/{{ event.id }}" target="{{ event.id }}_blank">签到</a>
                             </td>
                         </tr>
                     {% endfor %}

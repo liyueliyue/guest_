@@ -41,7 +41,7 @@ def event_manage(request):
 def guest_manage(request):
     guest_list = Guest.objects.all() # 获得table中所有对象
     username = request.session.get('user','') # 从浏览器中获取session
-    paginator = Paginator(guest_list,3)# 创建每页3条数据的分页器
+    paginator = Paginator(guest_list,5)# 创建每页3条数据的分页器
     page = request.GET.get('page') # 通过get请求得到当前要显示第几页数据
     try:
         contacts = paginator.page(page)
@@ -78,11 +78,11 @@ def sign_index(request,eid):
 # 签到动作
 @login_required
 def sign_index_action(request,eid):
+    # 默认调用django的table.objects.get()
+    # 方法，如果查询的对象不存在，则会抛出一个Http404异常。省了对table.objects.get()方法的断言。
     event = get_object_or_404(Guest,id=eid)
     phone = request.POST.get('phone','') # 通过获取用户输入的phone或直接点击签到按钮的空值
     print(phone)
-    result = Guest.objects.filter(phone=None)
-    return render(request,'sign_index.html',{'event':event,'hint':'请输入手机号码'})
     # 手机号码不存在的情况
     result = Guest.objects.filter(phone=phone)
     if not result:
@@ -91,8 +91,8 @@ def sign_index_action(request,eid):
     result = Guest.objects.filter(phone=phone,event_id=eid)
     if not result:
         return render(request,'sign_index.html',{'event':event,'hint':'发布会id或者手机号码错误'})
-
-    result = Guest.objects.filter(phone=phone,event_id=eid)
+    # 手机号码和发布会id对的上的情况：签到或未签到
+    result = Guest.objects.get(phone=phone,event_id=eid)
     if result.sign:
         return render(request,'sign_index.html',{'event':event,'hint':'您已经签到'})
     else:
