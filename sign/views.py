@@ -81,7 +81,8 @@ def sign_index_action(request,eid):
     event = get_object_or_404(Guest,id=eid)
     phone = request.POST.get('phone','') # 通过获取用户输入的phone或直接点击签到按钮的空值
     print(phone)
-
+    result = Guest.objects.filter(phone=None)
+    return render(request,'sign_index.html',{'event':event,'hint':'请输入手机号码'})
     # 手机号码不存在的情况
     result = Guest.objects.filter(phone=phone)
     if not result:
