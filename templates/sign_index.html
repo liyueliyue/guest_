@@ -28,14 +28,14 @@
     </nav>
 {#签到功能#}
     <div class="page-header" style="padding-top:80px;">
-        <div class="navbar-collapse collapse" id="navbar">
+        <div class="navbar-collapse collapse" id="navbar_">
             <form class="navbar-form" method="POST" action="/sign_index_action/{{ event.id }}">
                  {% csrf_token %}
                 <div class="form-group">
                     <input required name="phone" type="text" placeholder="请输入手机号码" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-success">签到</button>
-                <font color="red">{{ a }}
+                <font color="red">
                     <br>{{ hint }}
 {#                    # 用于显示签到成功和失败的信息，当签到成功时，下面两个将会显示嘉宾的姓名和手机号#}
                     <br>{{ guest.realname }}
